@@ -1,12 +1,34 @@
 #!/usr/bin/python -u
 
+import time
 import xmlrpclib
 import datetime
 
+class InvalidTicket (Exception):
+    def __init__ (self):
+        self.value = 'Invalid Ticket ID'
+        
+    def __str__ (self):
+        return repr(self.value)
+        
 class TicketAPI (object):
     def __init__ (self, username, passwd):
         self.server_url = 'https://%s:%s@code.djangoproject.com/login/rpc'  % (username, passwd)
         self.server_proxy = xmlrpclib.ServerProxy(self.server_url)
+        
+    def put_attachment (self, ticket_id, data, filename=None, description=None):
+        ts = time.gmtime()
+        if filename is None:
+            filename = time.strftime("%Y%m%d_%H%M%S.txt", ts)
+            
+        if description is None:
+            description = time.strftime("Posted: %a, %d %b %Y %H:%M:%S +0000", ts)
+            
+        if self.get_ticket(ticket_id):
+            b64_data = xmlrpclib.Binary(data)
+            return self.server_proxy.ticket.putAttachment(ticket_id, filename, description, b64_data, False)
+            
+        raise InvalidTicket()
         
     def get_ticket (self, ticket_id):
         try:
