@@ -82,14 +82,16 @@ class PullReq(models.Model):
     }
 
     """
-    created = models.DateTimeField(default=datetime.now)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     gh_json = models.TextField(max_length=2048) # json data from the pull req api on github
 
     gh_id = models.IntegerField() # 'number' from github
 
-    trac_id = models.IntegerField() # id from trac
+    trac_id = models.IntegerField(null=True) # id from trac
 
+    @property
     def gh_dict(self):
         if self.gh_json:
             try:
