@@ -33,7 +33,7 @@ class TicketAPI (object):
         but don't quote me on that.  @pizzapanther
         """
         
-        if get_ticket(ticket_id):
+        if self.get_ticket(ticket_id):
             changelog = self.server_proxy.ticket.changeLog(ticket_id)
             
             if ts:
