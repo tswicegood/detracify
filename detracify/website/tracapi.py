@@ -16,6 +16,11 @@ class TicketAPI (object):
         self.server_url = 'https://%s:%s@code.djangoproject.com/login/rpc'  % (username, passwd)
         self.server_proxy = xmlrpclib.ServerProxy(self.server_url)
         
+    def create (self, summary, description, attrs={}):
+        """Creates a new ticket and returns its Ticket ID"""
+        
+        return self.server_proxy.ticket.create(summary, description, attrs)
+        
     def put_attachment (self, ticket_id, data, filename=None, description=None):
         ts = time.gmtime()
         if filename is None:
