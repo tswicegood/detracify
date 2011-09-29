@@ -1,7 +1,8 @@
 from datetime import datetime
 from django.db import models
 
-import simplejson as json
+from django.utils import simplejson as json
+
 
 class PullReq(models.Model):
     """

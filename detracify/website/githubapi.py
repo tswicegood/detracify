@@ -1,7 +1,8 @@
 import requests
-import simplejson as json
+from django.utils import simplejson as json
 from django.conf import settings
 from website.models import PullReq
+
 
 API_BASE = getattr(settings, 'GITHUB_API_BASE', 'http://github.com/api/v2/json/pulls/')
 

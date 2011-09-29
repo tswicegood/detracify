@@ -6,7 +6,7 @@ from website.githubapi import GithubAPI
 #from website.tracapi import TracAPI
 
 from website.models import PullReq
-import simplejson as json
+from django.utils import simplejson as json
 
 import logging
 log = logging.getLogger('detracify.getpullreqs')
